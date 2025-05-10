@@ -67,7 +67,8 @@ namespace Restaurant_Manage
                         da.Fill(dt);
                         if (dt.Rows.Count > 0)
                         {
-                            MessageBox.Show("Login Success");
+                            Main mn = new Main();
+                            mn.Show();
                         }
                         else
                         {
