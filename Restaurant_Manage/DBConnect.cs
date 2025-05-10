@@ -10,7 +10,7 @@ namespace Restaurant_Manage
 {
     class DBConnect
     {
-        private SqlConnection con = new SqlConnection(@"Data Source=MURIEL\SQLEXPRESS;Initial Catalog=RestMangDB;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
+        private SqlConnection con = new SqlConnection(@"Data Source=MURIEL\SQLEXPRESS;Initial Catalog=RestMangDB;Integrated Security=True");
         public SqlConnection GetCon()
         { return con; }
         public void OpenCon()
@@ -23,5 +23,6 @@ namespace Restaurant_Manage
             if (con.State == ConnectionState.Open)
             { con.Close(); }
         }
+        
     }
 }
