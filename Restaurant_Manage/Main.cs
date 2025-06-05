@@ -27,5 +27,11 @@ namespace Restaurant_Manage
             Food fd = new Food();
             fd.Show();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Customer c = new Customer();
+            c.Show();
+        }
     }
 }
