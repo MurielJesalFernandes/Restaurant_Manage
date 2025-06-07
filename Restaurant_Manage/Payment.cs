@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -11,27 +12,11 @@ using System.Data.SqlClient;
 
 namespace Restaurant_Manage
 {
-    public partial class Food: Form
+    public partial class Payment: Form
     {
-        public Food()
+        public Payment()
         {
             InitializeComponent();
-        }
-
-        private void Food_Load(object sender, EventArgs e)
-        {
-            SqlConnection con = new SqlConnection(@"Data Source=MURIEL\SQLEXPRESS;Initial Catalog=RestMangDB;Integrated Security=True");
-            con.Open();
-            SqlCommand cmd = new SqlCommand("select * from foodtab", con);
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-            DataTable dt = new DataTable();
-            da.Fill(dt);
-            dataGridView1.DataSource = dt;
-        }
-
-        private void label6_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -39,27 +24,28 @@ namespace Restaurant_Manage
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnSave_Click(object sender, EventArgs e)
         {
             SqlConnection con = new SqlConnection(@"Data Source=MURIEL\SQLEXPRESS;Initial Catalog=RestMangDB;Integrated Security=True");
             con.Open();
-            SqlCommand cmd = new SqlCommand("insert into foodtab values(@foodid,@foodname,@price,@quantity,@status)", con);
-            cmd.Parameters.AddWithValue("@FoodID",int.Parse(textBox1.Text));
-            cmd.Parameters.AddWithValue("@FoodName", textBox2.Text);
-            cmd.Parameters.AddWithValue("@Price", textBox3.Text);
-            cmd.Parameters.AddWithValue("@Quantity", textBox4.Text);
-            cmd.Parameters.AddWithValue("@Status", textBox5.Text);
+            SqlCommand cmd = new SqlCommand("insert into paymenttab values(@pid,@customername,@food1,@food2,@food3, @paymentmethod, @amount)", con);
+            cmd.Parameters.AddWithValue("@PID", int.Parse(textBox1.Text));
+            cmd.Parameters.AddWithValue("@CustomerName", textBox2.Text);
+            cmd.Parameters.AddWithValue("@Food1", textBox3.Text);
+            cmd.Parameters.AddWithValue("@Food2", textBox4.Text);
+            cmd.Parameters.AddWithValue("@Food3", textBox5.Text);
+            cmd.Parameters.AddWithValue("@PaymentMethod", textBox6.Text);
+            cmd.Parameters.AddWithValue("@Amount", textBox7.Text);
             cmd.ExecuteNonQuery();
             con.Close();
             MessageBox.Show("Record Saved Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
             SqlConnection con = new SqlConnection(@"Data Source=MURIEL\SQLEXPRESS;Initial Catalog=RestMangDB;Integrated Security=True");
             con.Open();
-            SqlCommand cmd = new SqlCommand("select * from foodtab", con);
+            SqlCommand cmd = new SqlCommand("select * from paymenttab", con);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             da.Fill(dt);
@@ -69,22 +55,26 @@ namespace Restaurant_Manage
         private void btnNew_Click(object sender, EventArgs e)
         {
             textBox1.Text = "";
-            textBox5.Text = "";
-            textBox4.Text = "";
-            textBox3.Text = "";
             textBox2.Text = "";
+            textBox3.Text = "";
+            textBox4.Text = "";
+            textBox5.Text = "";
+            textBox6.Text = "";
+            textBox7.Text = "";
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
             SqlConnection con = new SqlConnection(@"Data Source=MURIEL\SQLEXPRESS;Initial Catalog=RestMangDB;Integrated Security=True");
             con.Open();
-            SqlCommand cmd = new SqlCommand("update foodtab set foodname=@foodname, price=@price, quantity=@quantity, status=@status where foodid=@foodid", con);
-            cmd.Parameters.AddWithValue("@FoodID", int.Parse(textBox1.Text));
-            cmd.Parameters.AddWithValue("@FoodName", textBox2.Text);
-            cmd.Parameters.AddWithValue("@Price", textBox3.Text);
-            cmd.Parameters.AddWithValue("@Quantity", textBox4.Text);
-            cmd.Parameters.AddWithValue("@Status", textBox5.Text);
+            SqlCommand cmd = new SqlCommand("update ordertab set customername=@customername, food1=@food1, food2=@food2, food3=@food3, paymentmethod=@paymentmethod, amount=@amount where pid=@pid", con);
+            cmd.Parameters.AddWithValue("@OrderID", int.Parse(textBox1.Text));
+            cmd.Parameters.AddWithValue("@CustomerName", textBox2.Text);
+            cmd.Parameters.AddWithValue("@Food1", textBox3.Text);
+            cmd.Parameters.AddWithValue("@Food2", textBox4.Text);
+            cmd.Parameters.AddWithValue("@Food3", textBox5.Text);
+            cmd.Parameters.AddWithValue("@PaymentMethod", textBox6.Text);
+            cmd.Parameters.AddWithValue("@Amount", textBox7.Text);
             cmd.ExecuteNonQuery();
             con.Close();
             MessageBox.Show("Record Updated Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -94,19 +84,19 @@ namespace Restaurant_Manage
         {
             SqlConnection con = new SqlConnection(@"Data Source=MURIEL\SQLEXPRESS;Initial Catalog=RestMangDB;Integrated Security=True");
             con.Open();
-            SqlCommand cmd = new SqlCommand("delete foodtab where foodid=@foodid", con);
-            cmd.Parameters.AddWithValue("@FoodID", int.Parse(textBox1.Text));
-            
+            SqlCommand cmd = new SqlCommand("delete paymenttab where pid=@pid", con);
+            cmd.Parameters.AddWithValue("@PID", int.Parse(textBox1.Text));
+
             cmd.ExecuteNonQuery();
             con.Close();
             MessageBox.Show("Record Deleted Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void btnDisplay_Click(object sender, EventArgs e)
+        private void Payment_Load(object sender, EventArgs e)
         {
             SqlConnection con = new SqlConnection(@"Data Source=MURIEL\SQLEXPRESS;Initial Catalog=RestMangDB;Integrated Security=True");
             con.Open();
-            SqlCommand cmd = new SqlCommand("select * from foodtab", con);
+            SqlCommand cmd = new SqlCommand("select * from paymenttab", con);
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             da.Fill(dt);
